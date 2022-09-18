@@ -12,12 +12,12 @@ print(f'Value{y < 20 and " " or " not "}less than 20')
 # 3. Write a Python program to check if a given number is Zero or Not.
 
 z = int(input('Enter number'))
-print(f'Given number is{not z and " " or " not "}Zero')
+print(f'Given number is{z and " not" or ""} Zero')
 
 # 4. Write a Python program to check if a given number is Even or Odd.
 
 w = int(input('Enter number'))
-print(f'Given number is {not w%2 and "Ewen" or "Odd"}')
+print(f'Given number is {w % 2 and "Odd" or "Ewen"}')
 
 # 5. Write a Python program to find largest number among three numbers entered by user.
 
