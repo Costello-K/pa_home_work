@@ -21,7 +21,7 @@ print(f'Given number is {w % 2 and "Odd" or "Ewen"}')
 
 # 5. Write a Python program to find largest number among three numbers entered by user.
 
-a = int(input('Enter first number'))
-b = int(input('Enter second number'))
-c = int(input('Enter third number'))
+a, b, c = int(input('Enter first number')),\
+          int(input('Enter second number')),\
+          int(input('Enter third number'))
 print(f'Largest number = {max(a, b, c)}')
