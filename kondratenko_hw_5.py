@@ -8,9 +8,9 @@ from math import sqrt
 
 num = input('Enter an even number')
 if not len(num) % 2:
-    ticket_len = int(len(num) / 2)
+    ticket_len = len(num) // 2
     happy_tic = sum(int(i) for i in num[:ticket_len]) == sum(int(i) for i in num[ticket_len:])
-    print(f'This number is{happy_tic and " " or " un"}lucky')
+    print(f'This number is {happy_tic and "lucky" or "unlucky"}')
 else:
     print(f'Given number is not even')
 
