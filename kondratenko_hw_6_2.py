@@ -2,6 +2,7 @@
 # Implement a function which receives a string and replaces all " symbols with
 # ' and vise versa. The function should return modified string.
 # Usage of any replacing string functions is prohibited.
+import string
 
 
 def change_text(text: str):
@@ -73,7 +74,7 @@ def func_split(text: str, sep=' '):
             w.append(i)
         else:
             res.append(''.join(w))
-            w = []
+            w.clear()
     res.append(''.join(w))
 
     return res
@@ -152,13 +153,16 @@ print(get_digits(8717, 82911, 99))
 
 
 def get_longest_word(s: str):
+    punctuation = [('\n', '\\n'), ('\t', '\\t'), ('\v', '\\v'), ('\r', '\\r'),
+                   ('\f', '\\f'), ('\b', '\\b'), ('\a', '\\a')]
+    for i, k in punctuation:
+        while i in s:
+            s = s.replace(i, k)
 
-    word_len = list(map(len, s.split()))
+    return max(''.join(list(s)).split(), key=len)
 
-    return s.split()[word_len.index(max(word_len))]
+print(get_longest_word('Python is si\nm\npl\te and effe\nctive!'))
 
-
-print(get_longest_word(r'Python is simple and effe\nctive!'))
 
 # • Exercise 7
 # Implement a function foo(List[int]) -> List[int] which, given a list of integers,

@@ -1,6 +1,5 @@
 from math import pi
 
-
 # 1. Напишіть програму, яка порахує скільки літер «b» у введеному рядку тексту.
 
 print(f'String contains {input("Enter text").count("b")} symbols "b"')
@@ -11,11 +10,11 @@ print(f'String contains {input("Enter text").count("b")} symbols "b"')
 
 name = input('Enter name').strip()
 
-print(f'{"Correct" if name.isalpha() and name[0].isupper() and name[1:].islower() else "Incorrect"} name')
+print(f'{"Correct" if len(name) > 1 and name.istitle() else "Incorrect"} name')
 
 # 3. Напишіть програму, яка обчислить суму всіх кодів символів рядка.
 
-print(f'The sum of the codes of all symbols: {sum(ord(i) for i in input("Enter text"))}')
+print(f'The sum of the codes of all symbols: {sum(map(ord, input("Enter text")))}')
 
 # 4. Виведіть на екран 10 рядків із значенням числа Pi. У першому рядку має бути
 # 2 знаки після коми, у другому 3 і так далі.
@@ -28,9 +27,7 @@ for i in range(2, 12):
 
 text = input('Enter text').split()
 
-word_len = list(map(len, text))
-
-print(f'Most largest word in string: {text[word_len.index(max(word_len))]}')
+print(f'Most largest word in string: {max(text, key=len)}')
 
 # 6. Вовочка, сидячи на уроці, писав поспіль однакові слова (слово може складатися
 # з однієї літери). Коли Марія Іванівна забрала у нього зошит, там був один рядок тексту.
