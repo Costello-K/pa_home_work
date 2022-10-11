@@ -110,6 +110,7 @@ print(find_r(arr, 12))
 
 def del_symbol_punctuation(text: str, punctuation: str):
     if isinstance(text, str) and isinstance(punctuation, str):
+        punctuation = ''.join(set(text) & set(punctuation))
         for i in punctuation:
             while i in text:
                 text = text.replace(i, '')
@@ -123,4 +124,4 @@ def count_words(text: str):
     raise TypeError('WRONG Type')
 
 
-print(count_words(' My age - 55 '))
+print(count_words(' My ag;e - 55 '))
