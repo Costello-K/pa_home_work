@@ -1,4 +1,4 @@
-from student import Student
+from pro_hw_2.student import Student
 
 
 days_week = dict(zip(range(1, 8), ['Monday', 'Tuesday', 'Wednesday',

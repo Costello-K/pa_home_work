@@ -1,4 +1,4 @@
-from human import Human
+from pro_hw_2.human import Human
 
 
 class Student(Human):
