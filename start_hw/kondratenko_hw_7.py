@@ -1,5 +1,6 @@
 from math import pi
 
+
 # 1. Напишіть програму, яка порахує скільки літер «b» у введеному рядку тексту.
 
 print(f'String contains {input("Enter text").count("b")} symbols "b"')
@@ -10,7 +11,7 @@ print(f'String contains {input("Enter text").count("b")} symbols "b"')
 
 name = input('Enter name').strip()
 
-print(f'{"Correct" if len(name) > 1 and name.istitle() else "Incorrect"} name')
+print(f'{"Correct" if len(name) > 2 and name.istitle() else "Incorrect"} name')
 
 # 3. Напишіть програму, яка обчислить суму всіх кодів символів рядка.
 
@@ -35,24 +36,17 @@ print(f'Most largest word in string: {max(text, key=len)}')
 # aaaaaaa - Вовочка писав слово - "a"
 # catcatcatcat - Вовочка писав слово - "cat"
 
-text = 'hghgffhghgffhghgffhghgffhghgff'
+text = 'hghgffhghgff'
 
-i, word = 0, ''
-while (i := i + 1) <= len(text):
-    if not text.replace(text[:i], ''):
+word = ''
+for i in range(1, len(text) // 2):
+    if text.count(text[0:i]) == len(text) / i:
         word = text[:i]
         break
+else:
+    word = text
 
 print(f'Word: {word}')
-
-# V-2
-# for i, _ in enumerate(text):
-#     if not text.replace(text[:i + 1], ''):
-#         word = text[:i + 1]
-#         break
-
-# V-3
-#   if text.count(text[0:i]) == len(text) / i:
 
 # 7. Напишіть програму для очищення тексту від HTML-тегів. Більше про
 # html-теги https://html5book.ru/html-tags/
@@ -62,8 +56,21 @@ print(f'Word: {word}')
 # - тег у собі може містити купу додаткової інформації.
 # Наприклад <div id="rcnt" style="clear:both;position:relative;zoom:1">
 
-text = ' <div id="rcnt" style="clear:both;position:relative;zoom:1"> 1111 ' \
-       '<div id="rcnt" style="clear:both;position:relative;zoom:1">' \
-       '2222222<div id="rcnt" style="clear:both;position:relative;zoom:1"> 333333 '
+text = ' <div id="rcnt" style="clear:both;position:relative;zoom:1"> 1<11>1 </div>' \
+       '<div id="rcnt" style="clear:both;position:relative;zoom:1"></div>' \
+       '2222222<div id="rcnt" style="clear:both;position:relative;zoom:1"> 333333 </div>'
 
-print(f'New string: "{"".join(text.replace("<", ">").split(">")[::2])}"')
+tag_list = ['a', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img', 'b', 'body',
+            'em', 'form', 'head', 'i', 'li', 'link', 'ol', 'p', 'span', 'td',
+            'th', 'title', 'u', 'ul', 'var']
+
+for tag in tag_list:
+    text = text.replace(f'</{tag}>', '')
+
+    while f'<{tag}' in text:
+        ind_start = text.find(f'<{tag}')
+        ind_end = text.find('>', ind_start)
+        text = text.replace(text[ind_start:ind_end + 1], '')
+
+print(f'New string: "{text}"')
+
