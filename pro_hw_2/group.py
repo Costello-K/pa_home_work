@@ -1,11 +1,12 @@
 from logger import logger
 from exceptions import InvalidArgument, ExceedingTheLimit
 from student import Student
+from group_iterator import GroupIterator
 
 
 class Group:
     """
-
+Доповніть клас Група (завдання Лекції 2) можливістю підтримки ітераційного протоколу.
     """
 
     def __init__(self, title: str, max_students=10):
@@ -21,6 +22,27 @@ class Group:
         if self.__students:
             return f'Group: {self.title}\n\t' + '\n\t'.join(map(str, self.__students))
         return 'There are no students in the group'
+
+    def __iter__(self):
+        return GroupIterator(self.__students)
+
+    def __len__(self):
+        return self.__students.__len__()
+
+    def __getitem__(self, index):
+        if isinstance(index, int):
+            if index < self.__students.__len__():
+                return self.__students[index]
+            raise IndexError
+        if isinstance(index, slice):
+            start = index.start or 0
+            stop = index.stop or self.__students.__len__()
+            step = index.step or 1
+            res = []
+            for i in range(start, stop, step):
+                res.append(self.__students[i])
+            return res
+        raise TypeError
 
     def add_student(self, student: Student):
         if not isinstance(student, Student):
@@ -41,3 +63,4 @@ class Group:
 
     def search_surname(self, surname: str):
         return [i for i in self.__students if i.surname == surname] or None
+

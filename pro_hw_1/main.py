@@ -21,3 +21,10 @@ if __name__ == '__main__':
     order_2.add_product(product_apple)
 
     print(order_1, order_2, sep='\n')
+
+    print(len(order_1))
+    print(order_1['apple'])
+    for i in order_1.items():
+        print(i)
+
+    print('apple' in order_1.keys())

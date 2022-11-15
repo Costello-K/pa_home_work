@@ -1,11 +1,12 @@
 from exceptions import InvalidArgument
 from product import Product
 from customer import Customer
+from order_iterator import OrderIterator
 
 
 class Order:
     """
-
+Модифікуєте клас Замовлення (завдання Лекції 1), додавши реалізацію протоколу послідовностей та ітераційного протоколу.
     """
     __order = 0
 
@@ -24,6 +25,26 @@ class Order:
         return f'Order {self.__order_number}:\n{str(self.customer)}\n' + \
                '\n'.join(f'{i} - {self.__products[i]["amount"]}' for i in self.__products.keys()) + \
                f'\nTotal price: {self.get_price()}'
+
+    def __iter__(self):
+        return OrderIterator(self.__products.keys())
+
+    def __len__(self):
+        return self.__products.__len__()
+
+    def __getitem__(self, name):
+        if self.__products.get(name):
+            return self.__products[name]
+        raise KeyError
+
+    def items(self):
+        return OrderIterator(self.__products.items())
+
+    def keys(self):
+        return OrderIterator(self.__products.keys())
+
+    def values(self):
+        return OrderIterator(self.__products.values())
 
     def add_product(self, product: Product):
         if not isinstance(product, Product):
