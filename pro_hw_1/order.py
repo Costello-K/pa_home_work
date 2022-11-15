@@ -6,7 +6,8 @@ from order_iterator import OrderIterator
 
 class Order:
     """
-Модифікуєте клас Замовлення (завдання Лекції 1), додавши реалізацію протоколу послідовностей та ітераційного протоколу.
+    Shopping cart
+    Supports methods for adding products
     """
     __order = 0
 

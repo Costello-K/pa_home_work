@@ -6,7 +6,8 @@ from group_iterator import GroupIterator
 
 class Group:
     """
-Доповніть клас Група (завдання Лекції 2) можливістю підтримки ітераційного протоколу.
+    Group of students
+    Supports methods for adding, deleting, searching students by surname
     """
 
     def __init__(self, title: str, max_students=10):
