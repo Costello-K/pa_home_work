@@ -59,19 +59,19 @@ print(get_count_literals(input('Enter text')))
 # You have: one hundred twenty three dollars thirty four cents
 
 
-def degree(stack_number, dictionary, digit_position=None):
-    number, tens, num_degree = dictionary.keys()
+def degree(stack_number, data_numbers, digit_position=None):
+    number, tens, num_degree = dict_numbers.keys()
     res = []
     if stack_number // 100:
-        res.append(f'{dictionary[number][stack_number // 100]} hundred')
+        res.append(f'{data_numbers[number][stack_number // 100]} hundred')
     if stack_number % 100 < 20:
-        res.append(f'{dictionary[number][stack_number % 100]}')
+        res.append(f'{data_numbers[number][stack_number % 100]}')
     else:
-        res.append(f'{dictionary[tens][stack_number % 100 // 10]}')
-        if dictionary[number][stack_number % 10]:
-            res.append(f'{dictionary[number][stack_number % 10]}')
+        res.append(f'{data_numbers[tens][stack_number % 100 // 10]}')
+        if data_numbers[number][stack_number % 10]:
+            res.append(f'{data_numbers[number][stack_number % 10]}')
     if digit_position:
-        res.append(f'{dict_numbers[num_degree][digit_position]}')
+        res.append(f'{data_numbers[num_degree][digit_position]}')
     return res
 
 
