@@ -1,3 +1,6 @@
+from math import log
+
+
 def is_arithmetic_progression(seq):
     difference = seq[1] - seq[0]
 
@@ -30,14 +33,17 @@ def next_member_geometric_progression(seq):
 
 
 def is_degree_progression(seq):
-    for k in range(1, seq[1] - seq[0]):
-        if min((i + 1) ** k == seq[i] for i in range(len(seq))):
+    for k in range(2, seq[1]):
+        if is_arithmetic_progression(tuple(round(pow(i, 1/log(seq[1], k)), 3) for i in seq)):
             return True
 
     return False
 
 
 def next_member_degree_progression(seq):
-    for k in range(1, seq[1] - seq[0]):
-        if min((i + 1) ** k == seq[i] for i in range(3)):
-            return (len(seq) + 1) ** k
+    for k in range(2, seq[1]):
+        degree = log(seq[1], k)
+        if is_arithmetic_progression(tuple(round(pow(i, 1/log(seq[1], k)), 3) for i in seq)):
+            return int((pow(seq[-1], 1/degree) + 1) ** degree)
+
+    return None
