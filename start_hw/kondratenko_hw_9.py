@@ -1,7 +1,6 @@
 import string
 from random import *
-a = 'k',
-print(a)
+
 
 # 1. Напишіть програму, яка прочитає два рядки тексту з клавіатури і виведе на екран літери,
 # які є одночасно і в першому, і в другому рядку. Наприклад,
@@ -39,13 +38,14 @@ all_list = tuple(first_list & second_list)
 
 
 def max_number(data):
-    if isinstance(data, tuple | list):
-        max_num = data[0]
-        for i in data:
-            if i > max_num:
-                max_num = i
-        return max_num
-    raise TypeError('WRONG Type')
+    if not isinstance(data, tuple | list):
+        raise TypeError('WRONG Type')
+
+    max_num = data[0] or None
+    for i in data:
+        if i > max_num:
+            max_num = i
+    return max_num
 
 
 print(max_number(all_list))
@@ -55,7 +55,7 @@ print(max_number(all_list))
 
 
 def data_to_string(text, *args):
-    sum_numb = sum([*args])
+    sum_numb = sum(args)
     if isinstance(sum_numb, int | float) and isinstance(text, str):
         return f'{sum_numb:.2f}{text}'
     raise TypeError('WRONG Type')
@@ -69,35 +69,37 @@ print(data_to_string('text', 3.562, 6))
 
 def print_string(w, space=' '):
     if isinstance(w, int):
-        print(f'*{space * (w - 2)}*')
-        return None
+        return f'*{space * (w - 2)}*'
     raise TypeError('WRONG Type')
 
 
 def figure(h, w):
     if h < 3 or w < 3:
         raise ValueError('WRONG: Height and width must be greater than 2')
-    if isinstance(h, int) and isinstance(w, int):
-        i = 0
-        while (i := i + 1) <= h:
-            print_string(w) if 1 < i < h else print_string(w, '*')
-        return None
-    raise TypeError('WRONG Type')
+    if not isinstance(h, int) and not isinstance(w, int):
+        raise TypeError('WRONG Type')
+
+    res = []
+    while len(res) < h:
+        res.append(print_string(w, '*') if not res or len(res) == h - 1 else print_string(w))
+    return '\n'.join(res)
 
 
-figure(4, 4)
+print(figure(4, 4))
 
 # 6. Напишіть функцію, яка реалізує лінійний пошук елемента у списку цілих чисел.
 # Якщо такий елемент у списку є, то поверніть індекс, якщо ні, то поверніть число «-1».
 
 
-def find_index(data, element):
-    if isinstance(sum(data), int) and isinstance(element, int):
-        for index, item in enumerate(data):
-            if item == element:
-                return index
-        return -1
-    raise TypeError('WRONG Type')
+def find_index(seq, element):
+    if not isinstance(sum(seq), int) and not isinstance(element, int):
+        raise TypeError('WRONG Type')
+
+    for index, item in enumerate(seq):
+        if item == element:
+            return index
+
+    return -1
 
 
 arr = [0, 4, 11]
@@ -108,19 +110,21 @@ print(find_index(arr, 12))
 
 
 def del_symbol_punctuation(text, punctuation):
-    if isinstance(text, str) and isinstance(punctuation, str):
-        punctuation = set(text) & set(punctuation)
-        for i in punctuation:
-            while i in text:
-                text = text.replace(i, '')
-        return text
-    raise TypeError('WRONG Type')
+    if not isinstance(text, str) and not isinstance(punctuation, str):
+        raise TypeError('WRONG Type')
+
+    punctuation = set(text) & set(punctuation)
+    for i in punctuation:
+        while i in text:
+            text = text.replace(i, '')
+    return text
 
 
 def count_words(text):
-    if isinstance(text, str):
-        return len(del_symbol_punctuation(text, string.punctuation).split())
-    raise TypeError('WRONG Type')
+    if not isinstance(text, str):
+        raise TypeError('WRONG Type')
+
+    return len(del_symbol_punctuation(text, string.punctuation).split())
 
 
-print(count_words(' My ag;e - 55 '))
+print(count_words('   My   ag;e - 55 '))

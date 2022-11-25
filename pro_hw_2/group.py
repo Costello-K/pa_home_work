@@ -31,19 +31,7 @@ class Group:
         return self.__students.__len__()
 
     def __getitem__(self, index):
-        if isinstance(index, int):
-            if index < self.__students.__len__():
-                return self.__students[index]
-            raise IndexError
-        if isinstance(index, slice):
-            start = index.start or 0
-            stop = index.stop or self.__students.__len__()
-            step = index.step or 1
-            res = []
-            for i in range(start, stop, step):
-                res.append(self.__students[i])
-            return res
-        raise TypeError
+        return self.__students[index]
 
     def add_student(self, student: Student):
         if not isinstance(student, Student):
@@ -55,6 +43,7 @@ class Group:
         if student not in self.__students:
             logger.info(f'{student}: add to group {self.title}')
             self.__students.append(student)
+        raise ValueError(f'"{student}" is already in the group {self.title}')
 
     def del_student(self, student: Student):
         if not isinstance(student, Student):

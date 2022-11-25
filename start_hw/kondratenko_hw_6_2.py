@@ -161,6 +161,7 @@ def get_longest_word(s: str):
 
     return max(''.join(list(s)).split(), key=len)
 
+
 print(get_longest_word('Python is si\nm\npl\te and effe\nctive!'))
 
 

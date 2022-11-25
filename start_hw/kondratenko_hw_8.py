@@ -1,4 +1,4 @@
-from dict import *
+from dict import days_week, dict_cats, dict_numbers, roman_numerals
 
 # 1. Використовуючи словник, напишіть програму, яка виведе на екран назву дня тижня за номером.
 # Наприклад, 1 - "Monday".
@@ -59,15 +59,20 @@ print(get_count_literals(input('Enter text')))
 # You have: one hundred twenty three dollars thirty four cents
 
 
-def degree(numb, dictionary, var):
-    if numb // 100:
-        var.append(f'{dictionary["number"][numb // 100]} hundred')
-    if numb % 100 < 20:
-        var.append(f'{dictionary["number"][numb % 100]}')
+def degree(stack_number, dictionary, digit_position=None):
+    number, tens, num_degree = dictionary.keys()
+    res = []
+    if stack_number // 100:
+        res.append(f'{dictionary[number][stack_number // 100]} hundred')
+    if stack_number % 100 < 20:
+        res.append(f'{dictionary[number][stack_number % 100]}')
     else:
-        var.append(f'{dictionary["tens"][numb % 100 // 10]}')
-        var.append(f'{dictionary["number"][numb % 10]}')
-    return None
+        res.append(f'{dictionary[tens][stack_number % 100 // 10]}')
+        if dictionary[number][stack_number % 10]:
+            res.append(f'{dictionary[number][stack_number % 10]}')
+    if digit_position:
+        res.append(f'{dict_numbers[num_degree][digit_position]}')
+    return res
 
 
 def get_words_from_num(number: str | int | float):
@@ -75,45 +80,36 @@ def get_words_from_num(number: str | int | float):
         raise TypeError('WRONG Type')
     if int(number) < 0:
         raise ValueError('WRONG Value')
-    num_to_list = list(map(int, str(f'{number: .2f}').replace('.', ',').split(',')))
-    dollar, cent = [], []
-    i = len(str(num_to_list[0])) // 3
-    while i > -1:
-        if not num_to_list[0]:
-            dollar.append('zero')
-            break
-        num = int(str(num_to_list[0] // 10 ** (3 * i))[-3:])
-        if num:
-            degree(num, dict_numbers, dollar)
-            dollar.append(f'{dict_numbers["degree"][i]}')
-        i -= 1
-    cent.append('zero') if not num_to_list[1] else degree(num_to_list[1], dict_numbers, cent)
-    res = f'You have: {" ".join(dollar)} dollars {" ".join(cent)} cents'
-    while '  ' in res:
-        res = res.replace('  ', ' ')
-    return res
+
+    num_to_tuple = tuple(map(int, str(f'{number: .2f}').replace('.', ',').split(',')))
+    dollar = []
+
+    dollar_to_list = '{0:,}'.format(num_to_tuple[0]).replace(',', ' ').split()
+    for k, v in enumerate(dollar_to_list):
+        if int(v):
+            dollar += degree(int(v), dict_numbers, len(dollar_to_list) - k)
+
+    return f'{" ".join(dollar) or "zero"} dollars {" ".join(degree(num_to_tuple[1], dict_numbers)) or "zero"} cents'
 
 
-print(get_words_from_num(99995640.50))
+print(get_words_from_num(1_999_995_640.50))
 
 # 5. Напишіть програму, яка переводить ціле число з римського запису до десяткового.
 # Наприклад: XXII -> 22
 
 
-def get_decimal_from_roman(roman_number: str):
+def get_decimal_from_roman(roman_number: str, date_numerals: dict):
     if not isinstance(roman_number, str):
         raise TypeError('WRONG Type')
-    dict_keys = roman_numerals.keys()
-    for i in roman_number:
-        if i not in dict_keys or not i.isupper():
-            raise ValueError('WRONG Value')
-    decimal_number = roman_numerals[roman_number[-1]]
+
+    if set(roman_number) - set(date_numerals) or not roman_number:
+        raise ValueError('WRONG Value')
+
+    decimal_number = date_numerals[roman_number[-1]]
     for i, k in zip(roman_number, roman_number[1:]):
-        if roman_numerals[i] >= roman_numerals[k]:
-            decimal_number += roman_numerals[i]
-        else:
-            decimal_number -= roman_numerals[i]
+        decimal_number += -date_numerals[i] if date_numerals[i] < date_numerals[k] else date_numerals[i]
+
     return decimal_number
 
 
-print(get_decimal_from_roman('DCCLXXXIX'))
+print(get_decimal_from_roman('DCCLXXXIX', roman_numerals))

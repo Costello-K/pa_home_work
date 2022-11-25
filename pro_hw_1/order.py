@@ -34,18 +34,16 @@ class Order:
         return self.__products.__len__()
 
     def __getitem__(self, name):
-        if self.__products.get(name):
-            return self.__products[name]
-        raise KeyError
+        return self.__products[name]
 
     def items(self):
-        return OrderIterator(self.__products.items())
+        return iter(self.__products.items())
 
     def keys(self):
-        return OrderIterator(self.__products.keys())
+        return iter(self.__products.keys())
 
     def values(self):
-        return OrderIterator(self.__products.values())
+        return iter(self.__products.values())
 
     def add_product(self, product: Product):
         if not isinstance(product, Product):

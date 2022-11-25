@@ -1,48 +1,64 @@
-import operator
-
-operation = {
-    '+': operator.add,
-    '*': operator.mul,
-    '**': operator.pow
-}
+import kondratenko_hw_10_modules as sequence_functions
+from dict import operation
+checkers = ((sequence_functions.is_arithmetic_progression, sequence_functions.next_member_arithmetic_progression),
+            (sequence_functions.is_geometric_progression, sequence_functions.next_member_geometric_progression),
+            (sequence_functions.is_degree_progression, sequence_functions.next_member_degree_progression)
+            )
 
 
 # 1. Існують такі послідовності чисел:
-# 0,2,4,6,8,10,12
-# 1,4,7,10,13
-# 1,2,4,8,16,32
-# 1,3,9,27
-# 1,4,9,16,25
-# 1,8,27,64,125
+seq_1 = (0, 2, 4, 6, 8, 10, 12)  # 14
+seq_2 = (1, 4, 7, 10, 13)  # 16
+seq_3 = (1, 2, 4, 8, 16, 32)  # 64
+seq_4 = (1, 3, 9, 27)  # 81
+seq_5 = (1, 4, 9, 16, 25)  # 36
+seq_6 = (1, 8, 27, 64, 125)  # 216
+seq_7 = (1, 6, 25)  # 216
 # Реалізуйте програму, яка виведе наступний член цієї послідовності (або подібної до них) на екран.
 # Послідовність користувач вводить з клавіатури у вигляді рядка. Наприклад, користувач вводить рядок
-# 0,5,10,15,20,25 та відповіддю програми має бути число 30.
-
-# def hhh()
-#
-# def next_number(actions, *args):
-#     li = args
-#
-#     for i in actions:
-#         action = actions[i]
-#         k, n = 0, 0
-#         while k < len(li):
-#             while n <= li[1] - li[0]:
-#                 if li[k+1] and action(li[k], n) == li[k+1]:
-#                     return action(li[-1], n)
-#                 n += 1
-#             k += 1
-#             n = 0
-#         else:
-#             return action(li[-1], n)
+# 0,5,10,15,20,25 та відповіддю програми має бути число 30
 
 
-# print(next_number(operation, 0, 2, 4, 6, 8, 10, 12))# 14
-# print(next_number(operation, 1, 4, 7, 10, 13))# 16
-# print(next_number(operation, 1, 2, 4, 8, 16, 32))# 64
-# print(next_number(operation, 1, 3, 9, 27))# 81
-# print(next_number(operation, 1, 4, 9, 16, 25))# 36
-# print(next_number(operation, 1, 8, 27, 64, 125))#216
+def next_member_sequence(*args: int):
+    if not isinstance(sum(args), int):
+        raise TypeError
+    if len(args) < 3:
+        raise ValueError('Minimum number of sequence members: 3')
+
+    for check, next_sequence in checkers:
+        if check(args):
+            return next_sequence(args)
+
+    raise ValueError('Sequence is not a progression')
+
+
+print(next_member_sequence(*seq_1))
+print(next_member_sequence(*seq_2))
+print(next_member_sequence(*seq_3))
+print(next_member_sequence(*seq_4))
+print(next_member_sequence(*seq_5))
+print(next_member_sequence(*seq_6))
+# print(next_member_sequence(*seq_7))
+
+
+def next_member_sequence_2(actions, *args):
+    for action in actions.values():
+        for k in range(1, abs(args[2] - args[0])):
+            if min(action(args[i], k) == args[i + 1] for i in range(3)):
+                return action(args[-1], k)
+            if min(action(i + 1, k) == args[i] for i in range(3)):
+                return action(len(args) + 1, k)
+
+    raise ValueError('Sequence is not a progression')
+
+
+print(next_member_sequence_2(operation, *seq_1))
+print(next_member_sequence_2(operation, *seq_2))
+print(next_member_sequence_2(operation, *seq_3))
+print(next_member_sequence_2(operation, *seq_4))
+print(next_member_sequence_2(operation, *seq_5))
+print(next_member_sequence_2(operation, *seq_6))
+# print(next_member_sequence_2(operation, *seq_7))
 
 # 2. Число-паліндром з обох сторін (справа ліворуч і ліворуч) читається однаково.
 # Найбільше число-паліндром, одержане множенням двох двозначних чисел: 9009 = 91 × 99.
@@ -50,21 +66,16 @@ operation = {
 # Виведіть значення цього паліндрому і те, vyj;tyyzv яких чисел він є.
 
 
-def palindrome(number):
-    numb_one = numb_two = number
-    numb_one =
-    while numb_one and numb_two:
-        product = numb_one * numb_two
-        text = str(product)
-        half_len = len(text) // 2
-        if text[:half_len] != text[:-half_len-1:-1]:
-            if (numb_one - 1) * numb_two >= (numb_two - 1) * numb_one:
-                numb_one -= 1
-            else:
-                numb_two -= 1
-        else:
-            return f'{numb_one} x {numb_two} = {product}'
-    raise ValueError('WRONG: Not have palindrome')
+def is_palindrome(num):
+    text = str(num)
+    return True if text == text[::-1] else None
 
 
-print(palindrome(99))
+def max_palindrome(start, stop):
+    if not isinstance(start, int) or not isinstance(stop, int):
+        raise TypeError
+
+    return max((i * j, (i, j)) for i in range(start, stop) for j in range(i, stop) if is_palindrome(i * j))
+
+
+print(max_palindrome(100, 1000))
