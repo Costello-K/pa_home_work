@@ -12,7 +12,7 @@ class Rectangle:
         :param b: rectangle width
         """
         if not isinstance(a, int | float | Decimal) and not isinstance(b, int | float | Decimal):
-            raise ValueError('Parameters must be only Integer, Float or Decimal')
+            raise TypeError('Parameters must be only Integer, Float or Decimal')
         if Decimal(a).quantize(Decimal("1.000")) <= 0 or Decimal(b).quantize(Decimal("1.000")) <= 0:
             raise ValueError('Parameters must be greater than 0')
         self.a = Decimal(a).quantize(Decimal("1.000"))
@@ -71,21 +71,15 @@ class Rectangle:
         raise TypeError('Invalid argument data type')
 
     def __mul__(self, other: int | float | Decimal):
-        if isinstance(other, int | float | Decimal):
-            n = Decimal(other).sqrt()
-            return Rectangle(self.a * n, self.b * n)
+        return self.__multiplication(other)
         return NotImplemented
 
     def __rmul__(self, other: int | float | Decimal):
-        if isinstance(other, int | float | Decimal):
-            n = Decimal(other).sqrt()
-            return Rectangle(self.a * n, self.b * n)
+        return self.__multiplication(other)
         raise TypeError('Invalid argument data type')
 
     def __imul__(self, other: int | float | Decimal):
-        if isinstance(other, int | float | Decimal):
-            n = Decimal(other).sqrt()
-            return Rectangle(self.a * n, self.b * n)
+        return self.__multiplication(other)
         raise TypeError('Invalid argument data type')
 
     def area(self):
@@ -108,3 +102,10 @@ class Rectangle:
                 return Rectangle(a, (self.area() + Rectangle(sub_a, sub_b).area()) / a)
             raise TypeError('Wrong data type in sequence')
         return None
+
+    def __multiplication(self, other):
+        if isinstance(other, int | float | Decimal):
+            n = Decimal(other).sqrt()
+            self.a = (self.a * n).quantize(Decimal("1.000"))
+            self.b = (self.b * n).quantize(Decimal("1.000"))
+            return self

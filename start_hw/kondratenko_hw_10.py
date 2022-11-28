@@ -44,9 +44,9 @@ print(next_member_sequence(*seq_6))
 def next_member_sequence_2(actions, *args):
     for action in actions.values():
         for k in range(1, abs(args[2] - args[0])):
-            if min(action(args[i], k) == args[i + 1] for i in range(3)):
+            if all(action(args[i], k) == args[i + 1] for i in range(3)):
                 return action(args[-1], k)
-            if min(action(i + 1, k) == args[i] for i in range(3)):
+            if all(action(i + 1, k) == args[i] for i in range(3)):
                 return action(len(args) + 1, k)
 
     raise ValueError('Sequence is not a progression')

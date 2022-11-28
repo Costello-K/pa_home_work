@@ -8,7 +8,7 @@ def geometric_progression_generator(multiplier, limit):
 
 
 def geometric_progression(multiplier: int, limit: int, max_number_of_iterations: int):
-    if not isinstance(sum((multiplier, limit, max_number_of_iterations)), int):
+    if not all(map(lambda p: isinstance(p, int), (multiplier, limit, max_number_of_iterations))):
         raise TypeError
 
     iteration, value = 0, 0
@@ -18,35 +18,30 @@ def geometric_progression(multiplier: int, limit: int, max_number_of_iterations:
             if k == max_number_of_iterations:
                 iteration, value = k, v
                 seq.send(True)
+            # print(v) | res.append(v)
         return geometric_progression_generator(multiplier, limit)
     except StopIteration:
         print(f'Error. Sequence has reached iteration {iteration} with value: {value}')
 
 
 def number_generator(*args: int):
-    if len(args) > 3:
-        raise ValueError('too many values to unpack (expected 3)')
-    if not isinstance(sum(args), int):
+    if not all(map(lambda p: isinstance(p, int), args)):
         raise TypeError
 
-    start = args[0] if len(args) > 1 else 0
-    stop = args[1] or args[0]
-    step = args[2] or 1
+    tmp = slice(*args)
+    start, stop, step = tmp.start or 0, \
+                        tmp.stop, \
+                        tmp.step or 1
 
-    i = 0
-    while start < stop:
-        if not i % step:
-            yield start
-        i += 1
-        start += 1
+    while start < stop and step > 0 or start > stop and step < 0:
+        yield start
+        start += step
 
 
 def prime_numbers(limit: int):
     if not isinstance(limit, int):
         raise TypeError
 
-    i = 1
-    while i <= limit:
-        if i % 2 and i % 3 and i % 5 and i % 7 or i == 2 or i == 3 or i == 5 or i == 7:
+    for i in range(2, limit):
+        if i % 2 and i % 3 and i % 5 and i % 7 or i in (2, 3, 5, 7):
             yield i
-        i += 1

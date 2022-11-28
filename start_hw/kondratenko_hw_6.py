@@ -108,7 +108,7 @@ for i in range(2, int(numb) + 1):
 print(f'\n{"end":^{LINE_WIDTH}}\n'.upper())
 
 # better solution
-# if i % 2 and i % 3 and i % 5 and i % 7 or i == 2 or i == 3 or i == 5 or i == 7:
+# if i % 2 and i % 3 and i % 5 and i % 7 or i in (2, 3, 5, 7):
 
 # 11. Виведіть на екран «пісочний годинник», максимальна ширина якого
 # зчитується з клавіатури (число непарне). У прикладі ширина дорівнює 5.

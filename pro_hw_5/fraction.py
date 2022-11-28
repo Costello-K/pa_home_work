@@ -15,14 +15,14 @@ class Fraction:
         if not isinstance(numerator, int) and not isinstance(denominator, int):
             raise TypeError('Parameters must be only Integer')
         if not denominator:
-            raise ValueError('Denominator cannot be 0')
-        self.numerator = numerator < 0 < denominator and numerator \
+            raise ZeroDivisionError('Denominator cannot be 0')
+        self.__numerator = numerator < 0 < denominator and numerator \
                          or numerator > 0 > denominator and -numerator or abs(numerator)
-        self.denominator = abs(denominator)
+        self.__denominator = abs(denominator)
         self.__is_divisor()
 
     def __str__(self):
-        return f'Fraction: {self.numerator}/{self.denominator}'
+        return f'Fraction: {self.__numerator}/{self.__denominator}'
 
     def __gt__(self, other):
         self.__is_class_exemplar(other)
@@ -50,39 +50,39 @@ class Fraction:
 
     def __add__(self, other):
         self.__is_class_exemplar(other)
-        denominator = self.__compound_denominator(other.denominator)
+        denominator = self.__compound_denominator(other.__denominator)
         numerator = self.__addition(other, denominator)
         return Fraction(numerator, denominator)
 
     def __iadd__(self, other):
         self.__is_class_exemplar(other)
-        denominator = self.__compound_denominator(other.denominator)
-        self.numerator = self.__addition(other, denominator)
-        self.denominator = denominator
+        denominator = self.__compound_denominator(other.__denominator)
+        self.__numerator = self.__addition(other, denominator)
+        self.__denominator = denominator
         return self
 
     def __sub__(self, other):
         self.__is_class_exemplar(other)
-        denominator = self.__compound_denominator(other.denominator)
+        denominator = self.__compound_denominator(other.__denominator)
         numerator = self.__subtraction(other, denominator)
         return Fraction(numerator, denominator)
 
     def __isub__(self, other):
         self.__is_class_exemplar(other)
-        denominator = self.__compound_denominator(other.denominator)
-        self.numerator = self.__subtraction(other, denominator)
-        self.denominator = denominator
+        denominator = self.__compound_denominator(other.__denominator)
+        self.__numerator = self.__subtraction(other, denominator)
+        self.__denominator = denominator
         self.__is_divisor()
         return self
 
     def __mul__(self, other):
         self.__is_class_exemplar(other)
-        return Fraction(self.numerator * other.numerator, self.denominator * other.denominator)
+        return Fraction(self.__numerator * other.__numerator, self.__denominator * other.__denominator)
 
     def __imul__(self, other):
         self.__is_class_exemplar(other)
-        self.numerator *= other.numerator
-        self.denominator *= other.denominator
+        self.__numerator *= other.__numerator
+        self.__denominator *= other.__denominator
         self.__is_divisor()
         return self
 
@@ -91,20 +91,22 @@ class Fraction:
             raise TypeError(f'"{exemplar}" is not an instance of class ProperFraction')
 
     def __compound_denominator(self, denominator):
-        return self.denominator * denominator // gcd(self.denominator, denominator)
+        return self.__denominator * denominator // gcd(self.__denominator, denominator)
 
     def float_number(self):
         # return round(self.numerator / self.denominator, 9)
-        return Decimal(self.numerator / self.denominator).quantize(Decimal("1.000000000"))
+        return Decimal(self.__numerator / self.__denominator).quantize(Decimal("1.000000000"))
 
     def __is_divisor(self):
-        divisor = gcd(self.numerator, self.denominator)
+        divisor = gcd(self.__numerator, self.__denominator)
         if divisor > 1:
-            self.numerator //= divisor
-            self.denominator //= divisor
+            self.__numerator //= divisor
+            self.__denominator //= divisor
 
     def __addition(self, other, denominator):
-        return denominator // self.denominator * self.numerator + denominator // other.denominator * other.numerator
+        return denominator // self.__denominator * self.__numerator \
+               + denominator // other.__denominator * other.__numerator
 
     def __subtraction(self, other, denominator):
-        return denominator // self.denominator * self.numerator - denominator // other.denominator * other.numerator
+        return denominator // self.__denominator * self.__numerator \
+               - denominator // other.__denominator * other.__numerator
