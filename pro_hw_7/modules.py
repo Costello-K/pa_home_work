@@ -17,9 +17,8 @@ def geometric_progression(multiplier: int, limit: int, max_number_of_iterations:
         for k, v in enumerate(seq):
             if k == max_number_of_iterations:
                 iteration, value = k, v
-                seq.send(True)
-            # print(v) | res.append(v)
-        return geometric_progression_generator(multiplier, limit)
+                seq.send('stop')
+        return None
     except StopIteration:
         print(f'Error. Sequence has reached iteration {iteration} with value: {value}')
 

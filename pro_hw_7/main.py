@@ -2,9 +2,8 @@ from modules import geometric_progression, number_generator, prime_numbers
 
 
 if __name__ == '__main__':
-    seq_1 = geometric_progression(3, 1000, 4)
-    seq_2 = geometric_progression(3, 1000, 10)
-    print(*seq_2)
+    print(geometric_progression(3, 1000, 4))
+    print(geometric_progression(3, 1000, 10))
 
     print(*range(-10, -5, 3))
     print(*number_generator(-10, -5, 3))

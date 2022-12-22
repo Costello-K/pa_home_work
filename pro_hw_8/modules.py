@@ -1,4 +1,7 @@
-def geometric_progression_generator(func, start, quantity_members):
+import math
+
+
+def progression_generator(func, start, quantity_members):
     while quantity_members:
         res = yield start
         if res:
@@ -7,18 +10,18 @@ def geometric_progression_generator(func, start, quantity_members):
         quantity_members -= 1
 
 
-def geometric_progression(func, start: int, limit: int, quantity_members: int):
+def generator_sequence(func, start: int, limit: int, quantity_members: int):
     if not all(map(lambda p: isinstance(p, int), (start, limit, quantity_members))):
         raise TypeError
 
     iteration, value = 0, 0
     try:
-        seq = geometric_progression_generator(func, start, quantity_members)
+        seq = progression_generator(func, start, quantity_members)
         for k, v in enumerate(seq):
             if v >= limit:
                 iteration, value = k, v
                 seq.send('stop')
-        return geometric_progression_generator(func, start, quantity_members)
+        return None
     except StopIteration:
         print(f'Error. Sequence has reached iteration {iteration} with value: {value}')
 
@@ -26,7 +29,7 @@ def geometric_progression(func, start: int, limit: int, quantity_members: int):
 s_1 = '''
 def fibonacci_closure(number_members):
     a, b, n = 0, 1, number_members
-
+ 
     def next_member():
         nonlocal a, b, n
         n -= 1
@@ -41,10 +44,12 @@ print(fibonacci_closure(10))
 '''
 
 s_2 = '''
+import functools
+@functools.lru_cache
 def fibonacci_recursion(number_members):
     if number_members in (1, 2):
         return 1
-    return fibonacci_recursion(number_members - 1) + fibonacci_recursion(number_members - 2)
+    return fibonacci_recursion(number_members - 2) + fibonacci_recursion(number_members - 1)
 
 
 print(fibonacci_recursion(10))
