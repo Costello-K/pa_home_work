@@ -17,7 +17,7 @@ class Fraction:
         if not denominator:
             raise ZeroDivisionError('Denominator cannot be 0')
         self.__numerator = numerator < 0 < denominator and numerator \
-                         or numerator > 0 > denominator and -numerator or abs(numerator)
+            or numerator > 0 > denominator and -numerator or abs(numerator)
         self.__denominator = abs(denominator)
         self.__is_divisor()
 
