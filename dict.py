@@ -6,8 +6,7 @@ operation = {
     '**': operator.pow
 }
 
-days_week = dict(zip(range(1, 8), ['Monday', 'Tuesday', 'Wednesday',
-                                   'Thursday', 'Friday', 'Saturday', 'Sunday']))
+days_week = dict(zip(range(1, 8), ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']))
 
 roman_numerals = {
     'I': 1,
@@ -55,9 +54,3 @@ dict_cats = [
         }
     }
 ]
-
-ticket_type = {'regular': 100,  'advance': 60, 'student': 50, 'late': 110}
-
-pizza_day = dict(zip(('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
-                     ('Pizza Napoletana', 'Pizza Calzone', 'Pizza Romana', 'Pizza Siciliana', 'Pizza fritta', 'Pizza Gourmet', 'Pizza al metro')
-                     ))

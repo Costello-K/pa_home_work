@@ -1,4 +1,4 @@
-from datetime import datetime
+import time
 from logger import logger
 
 
@@ -89,12 +89,11 @@ def save_result_to_file(func):
 def logger_decorator(quantity_iterations):
     def outer(func):
         def inner(*args, **kwargs):
-            start = datetime.now()
+            start = time.time()
             for _ in range(quantity_iterations):
                 func(*args, **kwargs)
-            finish = datetime.now()
-            logger.info(f'Function start at {start}, finish at {finish}, {quantity_iterations} iterations. '
-                        f'Total time: {finish - start}')
+            finish = time.time()
+            logger.info(f'{quantity_iterations} iterations. Total time: {finish - start}')
             return func(*args, **kwargs)
         return inner
     return outer

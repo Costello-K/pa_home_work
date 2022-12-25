@@ -71,15 +71,18 @@ class Rectangle:
         raise TypeError('Invalid argument data type')
 
     def __mul__(self, other: int | float | Decimal):
-        return self.__multiplication(other)
+        if isinstance(other, int | float | Decimal):
+            return self.__multiplication(other)
         return NotImplemented
 
     def __rmul__(self, other: int | float | Decimal):
-        return self.__multiplication(other)
+        if isinstance(other, int | float | Decimal):
+            return self.__multiplication(other)
         raise TypeError('Invalid argument data type')
 
     def __imul__(self, other: int | float | Decimal):
-        return self.__multiplication(other)
+        if isinstance(other, int | float | Decimal):
+            return self.__multiplication(other)
         raise TypeError('Invalid argument data type')
 
     def area(self):
@@ -88,7 +91,8 @@ class Rectangle:
     def perimeter(self):
         return (self.a + self.b) * 2
 
-    def __is_class_exemplar(self, exemplar):
+    @staticmethod
+    def __is_class_exemplar(exemplar):
         if not isinstance(exemplar, Rectangle):
             raise TypeError(f'"{exemplar}" is not an instance of class Rectangle')
 
@@ -101,11 +105,11 @@ class Rectangle:
             if isinstance(sub_a, int | float | Decimal) and isinstance(sub_b, int | float | Decimal):
                 return Rectangle(a, (self.area() + Rectangle(sub_a, sub_b).area()) / a)
             raise TypeError('Wrong data type in sequence')
-        return None
+        raise TypeError('Wrong var')
 
     def __multiplication(self, other):
-        if isinstance(other, int | float | Decimal):
-            n = Decimal(other).sqrt()
-            self.a = (self.a * n).quantize(Decimal("1.000"))
-            self.b = (self.b * n).quantize(Decimal("1.000"))
-            return self
+        n = Decimal(other).sqrt()
+        self.a = (self.a * n).quantize(Decimal("1.000"))
+        self.b = (self.b * n).quantize(Decimal("1.000"))
+        return self
+

@@ -33,6 +33,3 @@ if __name__ == '__main__':
     print(human_1, human_2, human_3, sep='\n')
 
     print(func_4())
-
-
-

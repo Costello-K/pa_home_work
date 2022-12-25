@@ -1,10 +1,8 @@
 from rectangle import Rectangle
 from fraction import Fraction
-from text_file_handler import TextFileHandler
 
 
 if __name__ == '__main__':
-    # Part 1
     rectangle_1 = Rectangle(4, 6)
     rectangle_2 = Rectangle(10, 9)
     rectangle_3 = 2 * Rectangle(10, 9) * 2
@@ -23,18 +21,3 @@ if __name__ == '__main__':
     print(t1, t2, t3, t4, t5, t6, sep='\n')
     t1 *= t2
     print(t1)
-
-    # Part 2
-    test_1 = TextFileHandler('text.txt')
-
-    print(test_1.sum_symbols())
-    print(test_1.sum_words())
-    print(test_1.sum_words(word_wrap=False))
-    print(test_1.sum_sentences())
-    print(test_1.quantity_characters('П'))
-    print(test_1.quantity_characters('П', 5_000, ignore_register=True))
-
-
-
-
-
