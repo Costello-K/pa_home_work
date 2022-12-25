@@ -12,9 +12,9 @@ class RegularSingleTicket(SingleTicket):
         event = f'Event: {self.title}\n'
         type_ticket = f'{self.type_use} ticket. Type: {self.type_ticket}\n'
         price = f'Price: {self.price}\n'
-        place = f'Place: {self.place}\n'
         event_date = f'Event date: {self.event_date}\n'
-        return f'{event}{type_ticket}{price}{event_date}{place}{self.number_ticket()}'
+        place = f'Place: {self.place}\n'
+        return f'{"".join(i for k, i in enumerate(locals().values()) if k)}{self.number_ticket()}'
 
     def get_price(self):
         return self.price
@@ -33,8 +33,8 @@ class RegularSingleTicket(SingleTicket):
         event = f'Event: {title}\n'
         type_ticket = f'{type_use} ticket. Type: {type_ticket}\n'
         price = f'Price: {price}\n'
-        place = f'Place: {place}\n'
         event_date = f'Event date: {event_date}\n'
+        place = f'Place: {place}\n'
         return f'{event}{type_ticket}{price}{event_date}{place}{number_of_ticket}'
 
 
@@ -48,9 +48,9 @@ class DiscountRegularSingleTicket(RegularSingleTicket):
         event = f'Event: {self.title}\n'
         type_ticket = f'{self.type_use} ticket. Type: {self.type_ticket} {self.discount}%. Tariff: {self.tariff}\n'
         price = f'Price: {self.price}\n'
-        place = f'Place: {self.place}\n'
         event_date = f'Event date: {self.event_date}\n'
-        return f'{event}{type_ticket}{price}{event_date}{place}{self.number_ticket()}'
+        place = f'Place: {self.place}\n'
+        return f'{"".join(i for k, i in enumerate(locals().values()) if k)}{self.number_ticket()}'
 
     @staticmethod
     def get_property_ticket(number_of_ticket):
@@ -58,8 +58,8 @@ class DiscountRegularSingleTicket(RegularSingleTicket):
         event = f'Event: {title}\n'
         type_ticket = f'{type_use} ticket. Type: {type_ticket} {discount}%. Tariff: {tariff}\n'
         price = f'Price: {price}\n'
-        place = f'Place: {place}\n'
         event_date = f'Event date: {event_date}\n'
+        place = f'Place: {place}\n'
         return f'{event}{type_ticket}{price}{event_date}{place}{number_of_ticket}'
 
 
